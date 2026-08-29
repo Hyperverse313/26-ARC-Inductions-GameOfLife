@@ -1,0 +1,10 @@
+1) To implement the count_neighbours function i have went with the method of explicit list as it was easier to imagine a 3x3 grid and each cells neighbour's state. As this code should work for a grid of any size, visualising it in the smallest format possible to account for the grid's edge cases was much easier.
+
+2)Also variables such as "dr" and "dc" were new to me in this code. I now know that they mean delta row and delta column to show the preceding or succeeding row or column in the neighbour_row and neighbour_col coordinates.
+
+3)Also "grid[neighbour_row][neighbour_col]" was kind of weird for me to look at as I was confused whether it just meant coordinates, product of the abscissa and ordinate or just the cell as a whole. So i found out that it basically means to access the cell value at the neighbour's position. This was a critical point of my learning experience as it had clarified the way the machine reacts to the query "Is the neighbour cell alive?"
+
+4)Applying Conway's Game of Life rules were pretty straightforward on paper but on VS code it required significant lines of code understanding for me. After it was done, I realized how the current grid gets converted into the new grid i.e., each cell and its neighbours are analyzed and then they are separately assigned "0" or "1" in the new grid.
+
+5)Lastly, in the seed type i experimented all 4 options of random, glider, pulsar and blinker and noticed that glider returned to a stationary position but pulsar and blinker kept changing in a uniform pattern.    
+ 
