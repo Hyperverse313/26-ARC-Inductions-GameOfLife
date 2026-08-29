@@ -15,8 +15,20 @@ def count_neighbors(grid, row, col):
     
     alive_count = 0
     
-    # TODO: Implement your neighbor-counting logic here!
-
+    # Define the 8 neighbor offsets (all directions except the center)
+    neighbors = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+    
+    # Check each neighbor
+    for dr, dc in neighbors:
+        neighbor_row = row + dr
+        neighbor_col = col + dc
+        
+        # Check if neighbor is within grid bounds
+        if 0 <= neighbor_row < len(grid) and 0 <= neighbor_col < len(grid[0]):
+            # Count if neighbor is alive (value == 1)
+            if grid[neighbor_row][neighbor_col] == 1:
+                alive_count += 1
+    
     return alive_count
 
 #---------------------------- TASK 2 ----------------------------
@@ -42,8 +54,24 @@ def compute_next_generation(grid):
     # Create a new blank grid of the same size, filled with 0s (dead cells)
     next_grid = [[0 for _ in range(cols)] for _ in range(rows)]
     
-    # TODO: Iterate through every cell in the `grid`.
-    # TODO: Use your `count_neighbors` function to find out how many neighbors it has.
-    # TODO: Apply the 4 Rules of Life to determine if it should be 1 (alive) or 0 (dead) in `next_grid`.
+    # Iterate through every cell in the grid
+    for r in range(rows):
+        for c in range(cols):
+            # Count the number of alive neighbors
+            neighbor_count = count_neighbors(grid, r, c)
+            current_state = grid[r][c]
+            
+            # Apply Conway's Game of Life rules
+            if current_state == 1:  # Cell is currently alive
+                # Rule 1 & 2: Survive if has 2 or 3 neighbors, die otherwise
+                if neighbor_count == 2 or neighbor_count == 3:
+                    next_grid[r][c] = 1  # Stays alive
+                else:
+                    next_grid[r][c] = 0  # Dies (underpopulation or overpopulation)
+            else:  # Cell is currently dead
+                # Rule 4: Reproduction - becomes alive if has exactly 3 neighbors
+                if neighbor_count == 3:
+                    next_grid[r][c] = 1  # Becomes alive
+                # else: stays dead (already initialized to 0)
 
     return next_grid
