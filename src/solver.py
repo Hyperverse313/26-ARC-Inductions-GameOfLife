@@ -15,17 +15,20 @@ def count_neighbors(grid, row, col):
     
     alive_count = 0
     
-    # Define the 8 neighbor offsets (all directions except the center)
+    # Define the 8 neighbor offsets (all directions except the center,
+    # as center is the refernce cell which should not be included)
     neighbors = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
     
     # Check each neighbor
-    for dr, dc in neighbors:
-        neighbor_row = row + dr
-        neighbor_col = col + dc
+    for delta_row, delta_col in neighbors:
+        neighbor_row = row + delta_row
+        neighbor_col = col + delta_col
         
-        # Check if neighbor is within grid bounds
+        # Check if neighbor is within grid boundary
         if 0 <= neighbor_row < len(grid) and 0 <= neighbor_col < len(grid[0]):
-            # Count if neighbor is alive (value == 1)
+            # Count if neighbor is alive (value == 1, as only 0 and 1 
+            # are valid values in the grid and 1 means it is alive) 
+
             if grid[neighbor_row][neighbor_col] == 1:
                 alive_count += 1
     
@@ -48,7 +51,9 @@ def compute_next_generation(grid):
           your changes will mess up the neighbor counts for subsequent cells!
     """
     
+    # Counting number of rows
     rows = len(grid)
+    # Counting number of columns only if there is atleast one row
     cols = len(grid[0]) if rows > 0 else 0
     
     # Create a new blank grid of the same size, filled with 0s (dead cells)
@@ -72,6 +77,6 @@ def compute_next_generation(grid):
                 # Rule 4: Reproduction - becomes alive if has exactly 3 neighbors
                 if neighbor_count == 3:
                     next_grid[r][c] = 1  # Becomes alive
-                # else: stays dead (already initialized to 0)
-
+                else:
+                    next_grid[r][c] = 0  # Stays dead 
     return next_grid
